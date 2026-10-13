@@ -34,4 +34,4 @@ solve:
 	@bash $(DIR)/solution.sh
 
 shell:
-	@docker exec -it clab-lab$(NUM)-$(NODE) sh -c 'command -v vtysh >/dev/null && echo "(router: type vtysh for the FRR CLI)"; command -v bash >/dev/null && exec bash; exec sh'
+	@docker exec -it clab-lab$(NUM)-$(NODE) sh -c 'command -v vtysh >/dev/null && echo "(router: type vtysh for the FRR CLI)"; command -v bash >/dev/null && exec bash; exec sh' || true

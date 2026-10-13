@@ -54,11 +54,16 @@ On Windows use WSL2; on macOS, Codespaces is the easiest route.
 ```bash
 make up    LAB=01           # start the lab's network
 make shell LAB=01 NODE=h1   # get a shell on node h1 (routers: type `vtysh` for the router CLI)
+exit                        # leave the node's shell and return to the Codespace
 make check LAB=01           # grade your work: ✅ / ❌ for each goal
 make reset LAB=01           # broke something? start over
 make down  LAB=01           # stop the lab
 make solve LAB=01           # stuck? apply the reference solution (try first!)
 ```
+
+`make` only works in the Codespace's own terminal, the one whose prompt shows
+`/workspaces/networking-lab`. Inside a node (prompt like `h1:~#`) there is no
+`make`: type `exit` first.
 
 Each lab folder has:
 
