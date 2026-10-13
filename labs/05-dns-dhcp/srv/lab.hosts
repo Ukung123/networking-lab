@@ -1,0 +1,4 @@
+# Static DNS records (same format as /etc/hosts).
+# After editing, reload with: bash labs/05-dns-dhcp/reload-dns.sh
+10.5.0.2    srv
+10.5.0.80   web

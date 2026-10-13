@@ -1,0 +1,42 @@
+# Lab 06: Packet capture with tcpdump, tshark and Wireshark
+#
+#   h1 10.6.1.10 ---- r1 ---- srv 10.6.2.80 (web server on port 80)
+#        10.6.1.0/24     10.6.2.0/24
+#
+# Every node mounts this lab's captures/ folder at /captures, so anything you
+# save there with `tcpdump -w /captures/x.pcap` appears in the repo, ready to
+# download and open in Wireshark.
+name: lab06
+
+topology:
+  defaults:
+    kind: linux
+    image: nicolaka/netshoot:v0.13
+    cmd: sleep infinity
+
+  nodes:
+    r1:
+      image: frrouting/frr:v8.4.1
+      cmd: /usr/lib/frr/docker-start
+      binds:
+        - r1/daemons:/etc/frr/daemons
+        - r1/frr.conf:/etc/frr/frr.conf
+        - r1/vtysh.conf:/etc/frr/vtysh.conf
+    h1:
+      binds:
+        - captures:/captures
+      exec:
+        - ip addr add 10.6.1.10/24 dev eth1
+        - ip route add 10.0.0.0/8 via 10.6.1.1
+    srv:
+      binds:
+        - captures:/captures
+        - www:/www:ro
+      exec:
+        - ip addr add 10.6.2.80/24 dev eth1
+        - ip route add 10.0.0.0/8 via 10.6.2.1
+        - sh -c "nohup python3 -m http.server 80 --directory /www > /var/log/web.log 2>&1 &"
+
+  links:
+    - endpoints: ["h1:eth1", "r1:eth1"]
+    - endpoints: ["r1:eth2", "srv:eth1"]

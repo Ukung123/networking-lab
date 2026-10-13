@@ -1,0 +1,6 @@
+# Containerlab runtime folders
+clab-*/
+.*.clab.yml.bak
+# Your work-in-progress answers and captures
+labs/*/answers.txt
+labs/06-packet-capture/captures/*.pcap
